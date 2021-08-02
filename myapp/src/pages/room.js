@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import Slider from 'react-slick'; 
+
 //components
 import { Background } from "../components/background";  
 import { Console } from "../components/console";
@@ -24,6 +26,9 @@ import line from '../assets/line.svg'
 //css
 import '../styles/room.css'
 import '../styles/global.css'
+
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 export default class Room extends React.Component {
   
@@ -117,6 +122,17 @@ export default class Room extends React.Component {
   render() {
 
     const {games, name, type, host, date, image } = this.state
+
+    const settings = {
+      className: "center",
+      centerMode: true,
+      infinite: true,
+      centerPadding: "-80px",
+      slidesToShow: 1,
+      speed: 500,
+      rows: 3,
+      slidesPerRow: 1
+    };
 
     return (
   
@@ -233,62 +249,70 @@ export default class Room extends React.Component {
                 className = 'agendar'
                 type = "submit"> Agendar </button>
               </form>
+
+          <Slider {...settings}>
+
           {games.map((game, index) => ( 
-              <div  
-                className = "game-wrapper">
-                  <img
-                  className = "border"
-                  src = {border}
-                  alt = "borda"/>
-                  <img
-                    className = "game"
-                    src = {game.image}
-                    alt = "game" >
+            <div
+              className = "game-wrapper">
 
-                  </img>
-                  
-                  <text
-                      className = "name"> {game.name} </text>
+              <img
+              className = "border"
+              src = {border}
+              alt = "borda"/>
 
-                  <img 
-                    className = "calendar"
-                    src = {calendar}
-                    alt = "calendar icon" />
+              <img
+                className = "game"
+                src = {game.image}
+                alt = "game" />
 
-                  <text
-                    className = "date"> {game.date} </text>
-                  
-                  <text
-                        className = "type-game"> {game.gameType} </text>
+              <text
+                className = "name"> {game.name} </text>
+              
 
-                  <img 
-                    className = "user"
-                    src = {game.hostType === 'Visitante'? `${visitante}`: `${anfitriao}`} 
-                    alt = "user icon" />
+              <img 
+                className = "calendar"
+                src = {calendar}
+                alt = "calendar icon" />
 
-                  <img 
-                        className = "line"
-                        src = {line}
-                        alt = "line"/>
+              <text
+                className = "date"> {game.date} </text>
 
-                  <i class="fas fa-trash"
-                    onClick = {()=> this.onDelete(index)}></i>
+              <text
+                className = "type-game"> {game.gameType} </text>
+              <img 
+                className = "user"
+                src = {game.hostType === 'Visitante'? `${visitante}`: `${anfitriao}`} 
+                
+                alt = "user icon" />
+
+
+              <img 
+                className = "line"
+                src = {line}
+                alt = "line"/>
+
+              <i class="fas fa-trash"
+                 onClick = {()=> this.onDelete(index)}></i>
            
-                  <i
-                    onClick = {()=> {
-                    this.setState({
-                      editing: true,
-                      editingIndex: index,
-                      name: game.name,
-                      type: game.gameType,
-                      date: game.date,
-                      image: game.image
-                    })
-                  }}
-                  class="fas fa-edit"></i>
-              </div>
+              <i
+                onClick = {()=> {
+                this.setState({
+                editing: true,
+                editingIndex: index,
+                name: game.name,
+                type: game.gameType,
+                date: game.date,
+                image: game.image
+                })
+              }}
+              class="fas fa-edit"></i>
+
+            </div>
               
           ))}
+
+          </Slider>
 
         </Background>
         

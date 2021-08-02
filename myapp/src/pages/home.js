@@ -7,8 +7,7 @@ import { Console } from '../components/console'
 import { Button } from '../components/button'
 import Fighter from '../components/fighter'
 
-import discord from '../assets/discord.svg'
-import line from '../assets/divisor.svg'
+import line from '../assets/divisor.svg';
 
 import "../styles/home.css"
 import '../styles/global.css'
@@ -55,7 +54,7 @@ function Home() {
             alt="line" />
 
             <i class="fab fa-google"></i>
-            
+
             <p>Entrar com Google</p>
 
           </Button>

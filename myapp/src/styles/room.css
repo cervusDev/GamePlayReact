@@ -211,9 +211,13 @@ section .agenda {
   left: 25px;
 }
 
+.center {
+  margin-top: 18rem;
+}
+
 .game-wrapper {
   position: relative;
-  top: 160px;
+  top: -20px;
   padding: 45px;
 
 }
