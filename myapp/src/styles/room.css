@@ -1,0 +1,371 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+
+#room {
+  overflow: hidden;
+}
+
+.background {
+  overflow: hidden;
+
+}
+
+.background img {
+  position: absolute;
+  left: 25px;
+  top: 25px;
+
+  cursor: pointer;
+}
+
+.background .button {
+  width: 46px;
+  height: 46px;
+
+  position: absolute;
+  left: 725px;
+  top: 25px;
+
+  background: #E51C44;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+
+  transition: all 1s;
+
+}
+
+.background .button:hover {
+  transform: scale(1.1);
+}
+
+.background .plus {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+
+  outline: none;
+
+}
+
+.background p {
+
+  position: absolute;
+  left: 92px;
+  top: 25px;
+
+  color: #DDE3F0;
+  font-family: 'Rajdhani';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 31px;
+
+}
+
+.background .name {
+  position: absolute;
+  left: 130px;
+  top: 25px;
+
+  color: #DDE3F0;
+  font-family: 'Rajdhani';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 31px;
+}
+
+.background text {
+
+  position: absolute;
+  left: 92px;
+  top: 55px;
+
+  color: #DDE3F0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 17px;
+
+}
+
+section .categories {
+  position: absolute;
+  left: 90px;
+}
+
+section .categories .first-text {
+  position: absolute;
+  top: 120px;
+  left: 255px;
+  font-family: 'Rajdhani';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 19px;
+  text-align: center;
+}
+
+section .categories .second-text{
+  position: absolute;
+  top: 120px;
+  left: 360px;
+  font-family:'Rajdhani';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 19px;
+  text-align: center;
+}
+
+section .categories .third-text {
+  position: absolute;
+  top: 120px;
+  left: 480px;
+  font-family: 'Rajdhani';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 19px;
+  text-align: center;
+}
+
+section .first-rectangle {
+  position: absolute;
+  left: 250px;
+  top: 25px;
+
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+
+}
+
+
+section .second-rectangle {
+  position: absolute;
+  left: 360px;
+  top: 25px;
+
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+
+}
+
+section .third-rectangle {
+  position: absolute;
+  left: 470px;
+  top: 25px;
+
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+
+}
+
+section .ranked { 
+  position: absolute;
+  left: 265px;
+  top: 40px;
+
+  transition: all 1s;
+}
+
+section .ranked:hover {
+  transform: scale(1.2);
+}
+
+section .duel {
+  position: absolute;
+  left: 375px;
+  top: 40px;
+
+  transition: all 1s;
+}
+
+section .duel:hover {
+  transform: scale(1.1);
+}
+
+section .funny {
+  position: absolute;
+  left: 490px;
+  top: 40px;
+
+  transition: all 1s;
+
+}
+
+section .funny:hover {
+  transform: scale(1.1);
+}
+
+section .agenda {
+  position: absolute;
+  top: 130px;
+  left: 25px;
+}
+
+.game-wrapper {
+  position: relative;
+  top: 160px;
+  padding: 45px;
+
+}
+
+.game {
+  position: absolute;
+  top: 20px;
+
+  transform: all .5s;
+
+  width: 55px;
+  height: 55px;
+
+  border-radius: 8px;
+}
+
+.game:hover {
+  transform: scale(1.1);
+}
+
+.game-wrapper .border {
+  position: absolute;
+  left: 22px;
+  top: 22px;
+
+  width: 60px;
+  height: 60px;
+
+
+}
+
+.game-wrapper .name{
+  font: normal bold 18px 'Rajdhani', sans-serif;
+  line-height: 23px;
+}
+
+.game-wrapper .calendar {
+  position: absolute;
+  left: 100px;
+  top: 70px;
+}
+
+.game-wrapper .date {
+  position: absolute;
+  left: 130px;
+  top: 70px;
+}
+
+.game-wrapper .type-game {
+  position: absolute;
+  top: 69px;
+  left: 650px;
+}
+
+.game-wrapper .user {
+  position: absolute;
+  top: 69px;
+  left: 750px;
+}
+
+.game-wrapper .line {
+  position: absolute;
+  top: 105px;
+  left: 620px;
+}
+
+.game-wrapper .fa-trash {
+  position: absolute;
+  top: 69px;
+  left: 850px;
+
+  font-size: 14px;
+  color: #E51C44;
+  cursor: pointer;
+
+}
+
+.game-wrapper .fa-edit {
+  position: absolute;
+  top: 68px;
+  left: 800px;
+
+  font-size: 14px;
+  cursor: pointer;
+
+  color: limegreen;
+}
+
+form {
+  display: flex;
+}
+
+form input {
+  position: absolute;
+  top: 480px;
+
+  width: 125px;
+  border: none;
+  border-radius: 8px;
+
+  background: #1D2766;
+  border: 1px solid #243189;
+  box-sizing: border-box; 
+  text-align: center;
+  outline: none;
+  
+}
+
+form .first {
+  position: absolute;
+  left: 70px;
+
+}
+
+form .second {
+  position: absolute;
+  left: 225px; 
+
+}
+
+form .third {
+  position: absolute;
+  left: 375px;
+}
+
+form .fourth {
+  position: absolute;
+  left: 525px;
+}
+
+form .five {
+  position: absolute;
+  left: 675px;
+}
+
+form button {
+  position: absolute;
+  top: 520px;
+  left: 310px;
+
+  width: 228px;
+  height: 36px;
+
+  background: #E61C44;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+
+  color: #DDE3F0;
+  font-family: 'Rajdhani';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 31px;  
+}

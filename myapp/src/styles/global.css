@@ -1,0 +1,56 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+}
+
+body {
+  background: #0E1647;
+  overflow-x: hidden;
+}
+
+.background {
+
+
+  position: absolute;
+  width: 900px;
+  height: 570px;
+  left: 230px;
+  top: 40px;
+
+  background: #0E1647;
+
+  border-radius: 30px;
+  box-shadow: .5rem -.5rem .5rem .5rem black;
+
+}
+
+.console {
+  width: 100%;
+}
+
+.console img{
+  position: absolute;
+  left: 15px;
+  top: 85px;
+  
+  width: 1340px;
+  height: 500px;
+
+
+}
+
+.background .fighter {
+  position: absolute;
+  top: 173px;
+  left: 10px;
+}
+
+.background .union {
+  position:unset;
+  
+}
