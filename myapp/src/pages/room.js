@@ -1,7 +1,8 @@
-import React from 'react';
+// React Libs
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick'; 
 
-//components
+// React Components
 import { Background } from "../components/background";  
 import { Console } from "../components/console";
 import {Button} from '../components/button'
@@ -23,301 +24,273 @@ import visitante from '../assets/visitante.svg'
 import line from '../assets/line.svg'
 
 
-//css
-import '../styles/room.css'
-import '../styles/global.css'
-
+// css components
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-export default class Room extends React.Component {
-  
+// css pages
+import '../styles/room.css'
+import '../styles/global.css'
 
-  constructor(props) {
-    super(props);
+function Room() {
 
-    this.state = {
-      games,
-      name: "",
-      type: "",
-      host: "",
-      date: "",
-      image: "",
-      editing: false,
-      editingIndex: null
-    };
-  };
+  const [isGames, setGames] = useState(games);
 
-  submit = (eventDefault) => { //porque a declaração function não funciona?
-    eventDefault.preventDefault();
+  const [isName, setName] = useState("");
+  const [isMatch, setMatch] = useState("");
+  const [isHost, setHost] = useState("");
+  const [isDate, setDate] = useState("");
+  const [isImage, setImage] = useState("");
 
-    const {games, name, type, host, date, image, editing, editingIndex } = this.state
+  const [isEditing, setEditing] = useState(false);
+  const [isIndex, setIndex] = useState(null);
 
-    this.setState({
-      name: "",
-      type: "",
-      host: "",
-      date: "",
-      image: ""
-     });
+  useEffect(() => {
+    if (isIndex !== null && isEditing) {
+      setName(isGames[isIndex].name);
+      setMatch(isGames[isIndex].match);
+      setHost(isGames[isIndex].host);
+      setDate(isGames[isIndex].date);
+      setImage(isGames[isIndex].image);
+    }
+  }, [isIndex,isEditing, isGames]);
 
-    if (editing) {
-      const updatedGame = games.map((game, index) => {
-        if (editingIndex === index) {
-          game.name = name
-          game.gameType = type
-          game.hostType = host
-          game.date = date
-          game.image = image
-        };
 
-        return game;
+  function onSubmit(event) {
 
+    event.preventDefault();
+
+    if (isEditing) {
+
+      const updateGames = isGames.map((value, index) => {
+
+        if (isIndex === index) {
+
+          value.name = isName;
+          value.match = isMatch;
+          value.host = isHost;
+          value.date = isDate;
+          value.image = isImage;
+
+        }; 
+        return value;
       });
 
-      this.setState({
-        games: updatedGame,
-        editing: false,
-        editingIndex: null
-      });
-
+      setGames(updateGames);
+      setEditing(false);
+      setIndex(null);
     } else {
-      this.setState({
-        games: [
-          ...games,
-          {
-            name: name,
-            gameType: type,
-            hostType: host,
-            date: date,
-            image: image
-          },
-        ]
-      });
-    };
-
-    this.setState({
-      name: "",
-      type: "",
-      host: "",
-      date: "",
-      image: ""
-
-    });
-
+      setGames([
+        ...isGames,
+        {
+          name: isName,
+          match: isMatch,
+          host: isHost,
+          date: isDate,
+          image: isImage,
+        }
+      ]);
+    }
+    setName("");
+    setMatch("");
+    setHost("");
+    setDate("");
+    setImage("");
   };
 
-  onDelete = (i) => {
-    const {games} = this.state;
-    if (window.confirm('você tem certeza que deseja excluir essa jogatina?')) {
-      this.setState({
-        games: games.filter((value, index) => index !== i)
-      });
-      
-    };
+  function onDelete(index) {
+    setGames(isGames.filter((value, i) => i !== index));
+  };
 
+  const settings = {
+    className: "center",
+    centerMode: true,
+    infinite: true,
+    centerPadding: "-80px",
+    slidesToShow: 1,
+    speed: 500,
+    rows: 3,
+    slidesPerRow: 1
   };
 
 
-  render() {
+  return(
+    <div id = "room">
+    <Console className = "console"/>
+    
+    <Background className = "background">
 
-    const {games, name, type, host, date, image } = this.state
+    <header>
 
-    const settings = {
-      className: "center",
-      centerMode: true,
-      infinite: true,
-      centerPadding: "-80px",
-      slidesToShow: 1,
-      speed: 500,
-      rows: 3,
-      slidesPerRow: 1
-    };
+        <img 
+        src= {self} 
+        alt="" />
 
-    return (
-  
-      <div id = "room">
-        <Console className = "console"/>
-        
-        <Background className = "background">
+        <p> Olá,</p> <p className= "name">Tiago</p>
+        <text> Hoje é dia de vitória</text>
 
-        <header>
-  
-            <img 
-            src= {self} 
-            alt="" />
-  
-            <p> Olá,</p> <p className= "name">Tiago</p>
-            <text> Hoje é dia de vitória</text>
-  
-            <Button 
-              className = "button">
-              <img 
-              className = "plus"
-              src = {plus}
-              alt = "plus"/>
-            </Button>
-          </header>
+        <Button 
+          className = "button">
+          <img 
+          className = "plus"
+          src = {plus}
+          alt = "plus"/>
+        </Button>
+      </header>
 
-          <section>
-            <div className = "categories">
-              <img 
-              className = "first-rectangle" 
-              src = {rectangle} 
-              alt = "rectangle"/>
-              <text
-              className = "first-text">Ranqueada</text>
-  
-              <img 
-              className = "second-rectangle" 
-              src = {rectangle} 
-              alt = "rectangle" />
-              <text
-              className = "second-text">Treinamento</text>
-  
-              <img 
-              className = "third-rectangle" 
-              src = {rectangle} 
-              alt = "rectangle" />
-              <text
-              className = "third-text"> Diversão </text>
-  
-              <img 
-              className = "ranked"
-              src = {rankicon} 
-              alt = "troféu" />
-  
-              <img 
-              className = "duel" 
-              src = {duel}
-              alt = "duel"/>
-  
-              <img
-              className = "funny"
-              src = {funny}
-              alt = "funny"/>
-            </div>
-  
-            <p className = "agenda"> Partidas agendadas</p> 
-          </section>
+      <section>
+        <div className = "categories">
+          <img 
+          className = "first-rectangle" 
+          src = {rectangle} 
+          alt = "rectangle"/>
+          <text
+          className = "first-text">Ranqueada</text>
 
-          <form onSubmit = {this.submit}>
-                <input 
-                className = "first"
-                placeholder = {name || "Nome do Jogo"}
-                onChange = {(state)=> {
-                  this.setState({
-                    name: state.target.value
-                  })
-                }}/>
-                <input
-                className = "second"
-                placeholder = {type || "Tipo da Partida"}
-                onChange = {(state)=> {
-                  this.setState({
-                    type: state.target.value
-                  })
-                }}/>
-                <input
-                className = "third"
-                placeholder = {date || "Data e Hora"}
-                onChange = {(state) => {
-                  this.setState({
-                    date: state.target.value
-                  })
-                }}/>
+          <img 
+          className = "second-rectangle" 
+          src = {rectangle} 
+          alt = "rectangle" />
+          <text
+          className = "second-text">Treinamento</text>
 
-                <input
-                className = "fourth"
-                placeholder = {image || "Url da Imagem"}
-                onChange = {(state)=> {
-                  this.setState({
-                    image: state.target.value
-                  })
-                }}/>
+          <img 
+          className = "third-rectangle" 
+          src = {rectangle} 
+          alt = "rectangle" />
+          <text
+          className = "third-text"> Diversão </text>
 
-                <input
-                className = "five"
-                placeholder = {host || "Tipo do Host"}
-                onChange = {(state)=> {
-                  this.setState({
-                    host: state.target.value
-                  })
-                }}/>
+          <img 
+          className = "ranked"
+          src = {rankicon} 
+          alt = "troféu" />
 
-                <button 
-                className = 'agendar'
-                type = "submit"> Agendar </button>
-              </form>
+          <img 
+          className = "duel" 
+          src = {duel}
+          alt = "duel"/>
 
-          <Slider {...settings}>
+          <img
+          className = "funny"
+          src = {funny}
+          alt = "funny"/>
+        </div>
 
-          {games.map((game, index) => ( 
-            <div
-              className = "game-wrapper">
+        <p className = "agenda"> Partidas agendadas</p> 
+      </section>
 
-              <img
-              className = "border"
-              src = {border}
-              alt = "borda"/>
+      <form onSubmit = {onSubmit}>
 
-              <img
-                className = "game"
-                src = {game.image}
-                alt = "game" />
+            <input 
+            className = "first"
+            value = {isName}
+            placeholder = "Nome do jogo"
+            onChange = {(event) => {
+              setName(event.target.value);
+            }} />
 
-              <text
-                className = "name"> {game.name} </text>
-              
+            <input
+            className = "second"
+            value = {isMatch}
+            placeholder = "Tipo de partida"
+            onChange = {(event) => {
+              setMatch(event.target.value);
+            }} />
+            <input
+            className = "third"
+            value = {isDate}
+            placeholder = "Data da partida"
+            onChange = {(event) => {
+              setDate(event.target.value);
+            }}/>
 
-              <img 
-                className = "calendar"
-                src = {calendar}
-                alt = "calendar icon" />
+            <input
+            className = "fourth"
+            value = {isImage}
+            placeholder = "Url da imagem"
+            onChange = {(event) => {
+              setImage(event.target.value);
+            }} />
 
-              <text
-                className = "date"> {game.date} </text>
+            <input
+            className = "five"
+            value = {isHost}
+            placeholder = "Tipo de host"
+            onChange = {(event) => {
+              setHost(event.target.value);
+            }} />
 
-              <text
-                className = "type-game"> {game.gameType} </text>
-              <img 
-                className = "user"
-                src = {game.hostType === 'Visitante'? `${visitante}`: `${anfitriao}`} 
-                
-                alt = "user icon" />
+            <button 
+            className = 'agendar'
+            type = "submit"> Agendar </button>
+
+          </form>
+
+      <Slider {...settings}>
+
+      {isGames.map((game, index) => ( 
+        <div
+          className = "game-wrapper">
+
+          <img
+          className = "border"
+          src = {border}
+          alt = "borda"/>
+
+          <img
+            className = "game"
+            src = {game.image}
+            alt = "game" />
+
+          <text
+            className = "name"> {game.name} </text>
+          
+
+          <img 
+            className = "calendar"
+            src = {calendar}
+            alt = "calendar icon" />
+
+          <text
+            className = "date"> {game.date} </text>
+
+          <text
+            className = "type-game"> {game.match} </text>
+          <img 
+            className = "user"
+            src = {game.host === 'Visitante'? `${visitante}`: `${anfitriao}`} 
+            
+            alt = "user icon" />
 
 
-              <img 
-                className = "line"
-                src = {line}
-                alt = "line"/>
+          <img 
+            className = "line"
+            src = {line}
+            alt = "line"/>
 
-              <i class="fas fa-trash"
-                 onClick = {()=> this.onDelete(index)}></i>
-           
-              <i
-                onClick = {()=> {
-                this.setState({
-                editing: true,
-                editingIndex: index,
-                name: game.name,
-                type: game.gameType,
-                date: game.date,
-                image: game.image
-                })
-              }}
-              class="fas fa-edit"></i>
+          <i class="fas fa-trash"
+             onClick = {()=> onDelete(index)}></i>
+       
+          <i
 
-            </div>
-              
-          ))}
+            onClick = {() => {
+              setEditing(true);
+              setIndex(index);
+            }}
 
-          </Slider>
+          class="fas fa-edit"></i>
 
-        </Background>
-        
-      </div>
-    )
-  }
-}
+        </div>
+          
+      ))}
 
+      </Slider>
+
+    </Background>
+    
+  </div>
+  );
+};
+
+export default Room;
