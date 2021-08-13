@@ -1,13 +1,12 @@
 // React Libs
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick'; 
+import ReactTooltip from 'react-tooltip';
 
 // React Components
 import { Background } from "../components/background";  
 import { Console } from "../components/console";
 import {Button} from '../components/button'
-import { games } from '../models/database';
-
 
 //images
 import self from "../assets/self.svg"
@@ -32,75 +31,10 @@ import "slick-carousel/slick/slick-theme.css";
 import '../styles/room.css'
 import '../styles/global.css'
 
+const BASE_URL = "http://localhost:5000";
+
 function Room() {
 
-  const [isGames, setGames] = useState(games);
-
-  const [isName, setName] = useState("");
-  const [isMatch, setMatch] = useState("");
-  const [isHost, setHost] = useState("");
-  const [isDate, setDate] = useState("");
-  const [isImage, setImage] = useState("");
-
-  const [isEditing, setEditing] = useState(false);
-  const [isIndex, setIndex] = useState(null);
-
-  useEffect(() => {
-    if (isIndex !== null && isEditing) {
-      setName(isGames[isIndex].name);
-      setMatch(isGames[isIndex].match);
-      setHost(isGames[isIndex].host);
-      setDate(isGames[isIndex].date);
-      setImage(isGames[isIndex].image);
-    }
-  }, [isIndex,isEditing, isGames]);
-
-
-  function onSubmit(event) {
-
-    event.preventDefault();
-
-    if (isEditing) {
-
-      const updateGames = isGames.map((value, index) => {
-
-        if (isIndex === index) {
-
-          value.name = isName;
-          value.match = isMatch;
-          value.host = isHost;
-          value.date = isDate;
-          value.image = isImage;
-
-        }; 
-        return value;
-      });
-
-      setGames(updateGames);
-      setEditing(false);
-      setIndex(null);
-    } else {
-      setGames([
-        ...isGames,
-        {
-          name: isName,
-          match: isMatch,
-          host: isHost,
-          date: isDate,
-          image: isImage,
-        }
-      ]);
-    }
-    setName("");
-    setMatch("");
-    setHost("");
-    setDate("");
-    setImage("");
-  };
-
-  function onDelete(index) {
-    setGames(isGames.filter((value, i) => i !== index));
-  };
 
   const settings = {
     className: "center",
@@ -111,6 +45,98 @@ function Room() {
     speed: 500,
     rows: 3,
     slidesPerRow: 1
+  };
+
+  const [isGames, setGames] = useState([]);
+
+  const [isName, setName] = useState("");
+  const [isMatch, setMatch] = useState("");
+  const [isHost, setHost] = useState("");
+  const [isDate, setDate] = useState("");
+  const [isImage, setImage] = useState("");
+
+  const [isEditing, setEditing] = useState(false);
+  const [isId, setId] = useState(null);
+
+  async function loadingAll() {
+    const response = await fetch(`${BASE_URL}/games`);
+    const data = await response.json();
+
+    setGames(data);
+  }
+
+  useEffect(()=> {
+    loadingAll();
+  }, []);
+
+  useEffect(() => {
+    if (isId !== null && isEditing) {
+      const game = isGames.find(value => value._id === isId);
+      
+      setName(game.name);
+      setMatch(game.match);
+      setHost(game.host);
+      setDate(game.date);
+      setImage(game.image);
+    }
+  }, [isId,isEditing, isGames]);
+
+
+  async function onSubmit(event) {
+
+    event.preventDefault();
+
+    if (isEditing) {
+
+      await fetch(`${BASE_URL}/update/${isId}`, {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: isName,
+          match: isMatch,
+          host: isHost,
+          date: isDate,
+          image: isImage
+        }),
+
+      });
+
+      setEditing(false);
+      setId(null);
+
+    } else {
+      await fetch(`${BASE_URL}/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: isName,
+          match: isMatch,
+          host: isHost,
+          date: isDate,
+          image: isImage
+        }),
+
+      });
+    }
+
+    loadingAll();
+
+    setName("");
+    setMatch("");
+    setHost("");
+    setDate("");
+    setImage("");
+  };
+
+  async function onDelete(id) {
+    await fetch(`${BASE_URL}/delete/${id}`, {
+      method: "DELETE",
+    });
+    loadingAll();
   };
 
 
@@ -229,61 +255,103 @@ function Room() {
 
       <Slider {...settings}>
 
-      {isGames.map((game, index) => ( 
-        <div
-          className = "game-wrapper">
+        {isGames.map((game, index) => ( 
+          <div
+            className = "game-wrapper">
 
-          <img
-          className = "border"
-          src = {border}
-          alt = "borda"/>
+            <img
+            className = "border"
+            src = {border}
+            alt = "borda"/>
 
-          <img
-            className = "game"
-            src = {game.image}
-            alt = "game" />
+            <img
+              className = "game"
+              src = {game.image}
+              alt = "game" />
 
-          <text
-            className = "name"> {game.name} </text>
-          
-
-          <img 
-            className = "calendar"
-            src = {calendar}
-            alt = "calendar icon" />
-
-          <text
-            className = "date"> {game.date} </text>
-
-          <text
-            className = "type-game"> {game.match} </text>
-          <img 
-            className = "user"
-            src = {game.host === 'Visitante'? `${visitante}`: `${anfitriao}`} 
+            <text
+              className = "name"> {game.name} </text>
             
-            alt = "user icon" />
+
+            <img
+              data-tip 
+              data-for = "date"
+              className = "calendar"
+              src = {calendar}
+              alt = "calendar icon" />
+            <ReactTooltip
+            id = "date"
+            type = "error"
+            effect = "solid">
+              <span> Data da partida </span>
+            </ReactTooltip>
+
+            <text
+              data-tip
+              className = "date"> {game.date} </text>
 
 
-          <img 
-            className = "line"
-            src = {line}
-            alt = "line"/>
+            <text
+              data-tip
+              data-for = "match"
+              className = "type-game"> {game.match} </text>
 
-          <i class="fas fa-trash"
-             onClick = {()=> onDelete(index)}></i>
-       
-          <i
+            <ReactTooltip
+            id = "match"
+            type = "error"
+            effect = "solid">
+              <span> Tipo da partida </span>
+            </ReactTooltip>
+            <img
+              data-tip 
+              data-for = "user"
+              className = "user"
+              src = {game.host === 'Visitante'? `${visitante}`: `${anfitriao}`} 
+              
+              alt = "user icon" />
+            <ReactTooltip
+            id = "user"
+            type = "error"
+            effect = "solid">
+              <span> Tipo do host </span>
+            </ReactTooltip>
 
-            onClick = {() => {
-              setEditing(true);
-              setIndex(index);
-            }}
+            <img 
+              className = "line"
+              src = {line}
+              alt = "line"/>  
 
-          class="fas fa-edit"></i>
+              <i 
+              class="fas fa-trash"
+              data-tip
+              data-for = "trash"
+              onClick = {()=> onDelete(game._id)}></i>
+            <ReactTooltip
+            id = "trash"
+            type = "error"
+            effect = "solid">
+              <span> deletar</span>
+            </ReactTooltip>
+        
+            <i
+                data-tip
+                data-for = "update"
+                onClick = {() => {
+                setEditing(true);
+                setId(game._id);
+              }}
 
-        </div>
-          
-      ))}
+            class="fas fa-edit"></i>
+            <ReactTooltip
+            id = "update"
+            type = "error"
+            effect = "solid">
+              <span> atualizar  </span>
+            </ReactTooltip>
+
+          </div>
+            
+        ))}
 
       </Slider>
 

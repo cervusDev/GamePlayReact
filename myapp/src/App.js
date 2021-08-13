@@ -9,10 +9,10 @@ function App() {
 
   return (
     <BrowserRouter>
-    <Switch>
-      <Route path = "/" exact component = {Home}/>
-      <Route path = "/room" component = {Room}/>
-    </Switch>
+      <Switch>
+        <Route path = "/" exact component = {Home}/>
+        <Route path = "/room" component = {Room}/>
+      </Switch>
     </BrowserRouter>
   );
 };
