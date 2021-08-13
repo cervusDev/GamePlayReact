@@ -1,7 +1,5 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-
-
+import React from 'react';
+import {useHistory} from 'react-router-dom'
 import { Background } from '../components/background'
 import { Console } from '../components/console'
 import { Button } from '../components/button'
@@ -12,14 +10,22 @@ import line from '../assets/divisor.svg';
 import "../styles/home.css"
 import '../styles/global.css'
 
+import { useAuth } from '../hooks/useAuth';
 
 
 function Home() {
-  const history = useHistory();
 
-  function navigateToRoom() {
-    history.push('/room')
+  const history = useHistory();
+  const { user, signinWithGoogle } = useAuth();
+
+  async function handleCreateRoom() {
+    if (!user){
+      await signinWithGoogle();
+    }
+
+    history.push("/room")
   }
+
   return (
 
     <div className= "home">
@@ -44,7 +50,7 @@ function Home() {
         <div className = "button">
 
           <Button
-           onClick = {navigateToRoom}
+           onClick = {handleCreateRoom}
            type = "submit">
 
             <img

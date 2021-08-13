@@ -1,5 +1,6 @@
 // React Libs
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Slider from 'react-slick'; 
 import ReactTooltip from 'react-tooltip';
 
@@ -9,14 +10,13 @@ import { Console } from "../components/console";
 import {Button} from '../components/button'
 
 //images
-import self from "../assets/self.svg"
+import self from "../assets/self.jpg"
 import rectangle from "../assets/rectangle.svg"
 import rankicon from '../assets/rankicon.svg'
 import duel from '../assets/duel.svg'
 import funny from '../assets/funny.svg'
 import border from '../assets/border.svg'
 
-import plus from '../assets/plus.svg'
 import calendar from '../assets/calendar.svg'
 import anfitriao from '../assets/anfitriao.svg'
 import visitante from '../assets/visitante.svg'
@@ -35,7 +35,6 @@ const BASE_URL = "http://localhost:5000";
 
 function Room() {
 
-
   const settings = {
     className: "center",
     centerMode: true,
@@ -47,7 +46,9 @@ function Room() {
     slidesPerRow: 1
   };
 
+
   const [isGames, setGames] = useState([]);
+  const history = useHistory();
 
   const [isName, setName] = useState("");
   const [isMatch, setMatch] = useState("");
@@ -80,7 +81,10 @@ function Room() {
       setImage(game.image);
     }
   }, [isId,isEditing, isGames]);
-
+  
+  function navigateToHome() {
+    history.push('/')
+  };
 
   async function onSubmit(event) {
 
@@ -149,18 +153,19 @@ function Room() {
     <header>
 
         <img 
+        className = 'self-avatar'
         src= {self} 
         alt="" />
 
-        <p> Olá,</p> <p className= "name">Tiago</p>
+        <p> Olá,</p> <p className= "name">Gustavo</p>
         <text> Hoje é dia de vitória</text>
 
         <Button 
+          onClick = {navigateToHome}
           className = "button">
-          <img 
-          className = "plus"
-          src = {plus}
-          alt = "plus"/>
+            <i
+              onClick = {navigateToHome}
+              class="fas fa-chevron-left"></i>
         </Button>
       </header>
 

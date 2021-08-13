@@ -41,13 +41,13 @@
   transform: scale(1.1);
 }
 
-.background .plus {
+.background .fa-chevron-left{
   position: absolute;
-  left: 16px;
+  left: 17px;
   top: 16px;
+  color: #DDE3F0;
 
   outline: none;
-
 }
 
 .background p {
@@ -91,6 +91,13 @@
   font-size: 13px;
   line-height: 17px;
 
+}
+
+header img {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 8px;
 }
 
 section .categories {
@@ -211,6 +218,10 @@ section .agenda {
   left: 25px;
 }
 
+.agendar:hover{
+  filter: brightness(.9);
+}
+
 .center {
   margin-top: 18rem;
 }
@@ -246,7 +257,15 @@ section .agenda {
   width: 60px;
   height: 60px;
 
+  transform: all .5s;
+  animation: moveBorder .5s;
 
+}
+
+@keyframes moveBorder {
+  .game:hover {
+    transform: scale(1.1);
+  }
 }
 
 .game-wrapper .name{
@@ -373,3 +392,4 @@ form button {
   font-size: 20px;
   line-height: 31px;  
 }
+
